@@ -1,0 +1,682 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<EditText 
+
+android:id="@+id/num1" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter First Number" 
+
+android:inputType="numberDecimal" /> 
+
+ 
+
+<EditText 
+
+android:id="@+id/num2" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Second Number" 
+
+android:inputType="numberDecimal" 
+
+android:layout_marginTop="8dp" /> 
+
+ 
+
+<LinearLayout 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+
+
+android:orientation="horizontal" 
+
+android:layout_marginTop="16dp"> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnAdd" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="+" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnSubtract" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="-" 
+
+android:layout_marginStart="8dp" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnMultiply" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="×" 
+
+android:layout_marginStart="8dp" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnDivide" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="÷" 
+
+
+
+android:layout_marginStart="8dp" /> 
+
+</LinearLayout> 
+
+ 
+
+<TextView 
+
+android:id="@+id/resultView" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Result: " 
+
+android:textSize="20sp" 
+
+android:layout_marginTop="24dp" /> 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.arithmeticapp; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.*; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText num1, num2; 
+
+Button btnAdd, btnSubtract, btnMultiply, btnDivide; 
+
+TextView resultView; 
+
+ 
+
+@Override 
+
+
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+num1 = findViewById(R.id.num1); 
+
+num2 = findViewById(R.id.num2); 
+
+btnAdd = findViewById(R.id.btnAdd); 
+
+btnSubtract = findViewById(R.id.btnSubtract); 
+
+btnMultiply = findViewById(R.id.btnMultiply); 
+
+btnDivide = findViewById(R.id.btnDivide); 
+
+resultView = findViewById(R.id.resultView); 
+
+ 
+
+btnAdd.setOnClickListener(view -> calculate('+')); 
+
+btnSubtract.setOnClickListener(view -> calculate('-')); 
+
+btnMultiply.setOnClickListener(view -> calculate('*')); 
+
+btnDivide.setOnClickListener(view -> calculate('/')); 
+
+} 
+
+ 
+
+private void calculate(char operator) { 
+
+String s1 = num1.getText().toString(); 
+
+String s2 = num2.getText().toString(); 
+
+ 
+
+if (s1.isEmpty() || s2.isEmpty()) { 
+
+Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+ 
+
+double number1 = Double.parseDouble(s1); 
+
+
+
+double number2 = Double.parseDouble(s2); 
+
+double result = 0; 
+
+ 
+
+switch (operator) { 
+
+case '+': 
+
+result = number1 + number2; 
+
+break; 
+
+case '-': 
+
+result = number1 - number2; 
+
+break; 
+
+case '*': 
+
+result = number1 * number2; 
+
+break; 
+
+case '/': 
+
+if (number2 == 0) { 
+
+Toast.makeText(this, "Cannot divide by zero!", Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+result = number1 / number2; 
+
+break; 
+
+} 
+
+ 
+
+resultView.setText("Result: " + result); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- Button to update number of players to 4 for Badminton --> 
+
+<Button 
+
+android:id="@+id/btnUpdateBadminton" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Update Badminton Players" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- Button to show all game records --> 
+
+<Button 
+
+android:id="@+id/btnShowGames" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Show All Games" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+</LinearLayout> 
+
+
+
+ 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.gameapp; 
+
+ 
+
+import android.database.Cursor; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private Button btnUpdateBadminton, btnShowGames; 
+
+private DatabaseHelper dbHelper; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+// Initialize the buttons 
+
+btnUpdateBadminton = findViewById(R.id.btnUpdateBadminton); 
+
+btnShowGames = findViewById(R.id.btnShowGames); 
+
+ 
+
+// Initialize the DatabaseHelper 
+
+
+
+dbHelper = new DatabaseHelper(this); 
+
+ 
+
+// Set up the listener to update the number of players for Badminton 
+
+btnUpdateBadminton.setOnClickListener(v -> { 
+
+int result = dbHelper.updatePlayersForBadminton(); 
+
+if (result > 0) { 
+
+Toast.makeText(MainActivity.this, "Badminton players updated to 4.", 
+Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "No records found for Badminton.", 
+Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+ 
+
+// Set up the listener to show all game records 
+
+btnShowGames.setOnClickListener(v -> { 
+
+Cursor cursor = dbHelper.getAllGames(); 
+
+if (cursor != null && cursor.getCount() > 0) { 
+
+StringBuilder gameList = new StringBuilder(); 
+
+while (cursor.moveToNext()) { 
+
+int gno = cursor.getInt(cursor.getColumnIndex("gno")); 
+
+String gname = cursor.getString(cursor.getColumnIndex("gname")); 
+
+String type = cursor.getString(cursor.getColumnIndex("type")); 
+
+int noOfPlayers = cursor.getInt(cursor.getColumnIndex("no_of_players")); 
+
+ 
+
+gameList.append("GNO: ").append(gno).append("\n") 
+
+.append("GNAME: ").append(gname).append("\n") 
+
+.append("TYPE: ").append(type).append("\n") 
+
+.append("NO. OF PLAYERS: ").append(noOfPlayers).append("\n\n"); 
+
+
+
+} 
+
+Toast.makeText(MainActivity.this, gameList.toString(), Toast.LENGTH_LONG).show(); 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "No Games Found", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+DBHelper.java 
+
+// DatabaseHelper.java 
+
+package com.example.gameapp; 
+
+ 
+
+import android.content.ContentValues; 
+
+import android.content.Context; 
+
+import android.database.Cursor; 
+
+import android.database.sqlite.SQLiteDatabase; 
+
+import android.database.sqlite.SQLiteOpenHelper; 
+
+ 
+
+public class DatabaseHelper extends SQLiteOpenHelper { 
+
+ 
+
+// Database Name and Version 
+
+private static final String DATABASE_NAME = "gameDB"; 
+
+private static final int DATABASE_VERSION = 1; 
+
+ 
+
+// Game Table 
+
+private static final String TABLE_GAME = "Game"; 
+
+
+
+private static final String COLUMN_GNO = "gno"; 
+
+private static final String COLUMN_GNAME = "gname"; 
+
+private static final String COLUMN_TYPE = "type"; 
+
+private static final String COLUMN_NO_OF_PLAYERS = "no_of_players"; 
+
+ 
+
+// SQL query to create the table 
+
+private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_GAME + " (" 
+
++ COLUMN_GNO + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+
++ COLUMN_GNAME + " TEXT, " 
+
++ COLUMN_TYPE + " TEXT, " 
+
++ COLUMN_NO_OF_PLAYERS + " INTEGER);"; 
+
+ 
+
+// Constructor 
+
+public DatabaseHelper(Context context) { 
+
+super(context, DATABASE_NAME, null, DATABASE_VERSION); 
+
+} 
+
+ 
+
+// Create the table when the database is created 
+
+@Override 
+
+public void onCreate(SQLiteDatabase db) { 
+
+db.execSQL(CREATE_TABLE); 
+
+} 
+
+ 
+
+// Update the database (if needed) 
+
+@Override 
+
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { 
+
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAME); 
+
+onCreate(db); 
+
+
+
+} 
+
+ 
+
+// Method to insert a new game record 
+
+public long insertGame(String gname, String type, int noOfPlayers) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put(COLUMN_GNAME, gname); 
+
+values.put(COLUMN_TYPE, type); 
+
+values.put(COLUMN_NO_OF_PLAYERS, noOfPlayers); 
+
+long result = db.insert(TABLE_GAME, null, values); 
+
+db.close(); 
+
+return result; 
+
+} 
+
+ 
+
+// Method to update the number of players where the game is "Badminton" 
+
+public int updatePlayersForBadminton() { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put(COLUMN_NO_OF_PLAYERS, 4); // Setting the number of players to 4 
+
+return db.update(TABLE_GAME, values, COLUMN_GNAME + " = ?", new 
+String[]{"Badminton"}); 
+
+} 
+
+ 
+
+// Method to fetch all game records 
+
+public Cursor getAllGames() { 
+
+SQLiteDatabase db = this.getReadableDatabase(); 
+
+return db.rawQuery("SELECT * FROM " + TABLE_GAME, null); 
+
+} 
+
+
+
+} 
+
+ 
+
+ 
+
+ 
+
+Manifest File 
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+
+package="com.example.gameapp"> 
+
+ 
+
+<application 
+
+android:allowBackup="true" 
+
+android:icon="@mipmap/ic_launcher" 
+
+android:label="GameApp" 
+
+android:theme="@style/Theme.GameApp"> 
+
+ 
+
+<activity android:name=".MainActivity"> 
+
+<intent-filter> 
+
+<action android:name="android.intent.action.MAIN" /> 
+
+<category android:name="android.intent.category.LAUNCHER" /> 
+
+</intent-filter> 
+
+</activity> 
+
+ 
+
+</application> 
+
+</manifest>

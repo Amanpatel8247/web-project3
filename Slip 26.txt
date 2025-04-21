@@ -1,0 +1,368 @@
+﻿Q1) 
+
+Activity.xml 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp"> 
+
+ 
+
+<EditText 
+
+android:id="@+id/number1Input" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Number 1" 
+
+android:inputType="number" /> 
+
+ 
+
+<EditText 
+
+android:id="@+id/number2Input" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Number 2" 
+
+android:inputType="number" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/submitButton" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:text="Submit" /> 
+
+ 
+
+
+
+<TextView 
+
+android:id="@+id/resultTextView" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:paddingTop="16dp" 
+
+android:text="Result will be displayed here" 
+
+android:textSize="16sp" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+package com.example.numbercheck; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.text.TextUtils; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.TextView; 
+
+import android.widget.Toast; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+private EditText number1Input, number2Input; 
+
+private Button submitButton; 
+
+private TextView resultTextView; 
+
+ 
+
+
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+number1Input = findViewById(R.id.number1Input); 
+
+number2Input = findViewById(R.id.number2Input); 
+
+submitButton = findViewById(R.id.submitButton); 
+
+resultTextView = findViewById(R.id.resultTextView); 
+
+ 
+
+submitButton.setOnClickListener(new View.OnClickListener() { 
+
+@Override 
+
+public void onClick(View v) { 
+
+String num1String = number1Input.getText().toString(); 
+
+String num2String = number2Input.getText().toString(); 
+
+ 
+
+if (TextUtils.isEmpty(num1String) || TextUtils.isEmpty(num2String)) { 
+
+Toast.makeText(MainActivity.this, "Please enter valid numbers", 
+Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+ 
+
+int num1 = Integer.parseInt(num1String); 
+
+int num2 = Integer.parseInt(num2String); 
+
+ 
+
+if (num1 > 10 && num2 > 10) { 
+
+Toast.makeText( 
+
+MainActivity.this, 
+
+
+
+"Both numbers are greater than 10. Please enter new numbers.", 
+
+Toast.LENGTH_SHORT 
+
+).show(); 
+
+ 
+
+number1Input.getText().clear(); 
+
+number2Input.getText().clear(); 
+
+} else { 
+
+resultTextView.setText("Number 1: " + num1 + "\nNumber 2: " + num2); 
+
+} 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:padding="20dp" 
+
+android:gravity="center" 
+
+android:orientation="vertical"> 
+
+ 
+
+<TextView 
+
+
+
+android:id="@+id/textView" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Long Press Me for Context Menu" 
+
+android:textSize="20sp" 
+
+android:padding="10dp" 
+
+android:background="#E0E0E0" /> 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+package com.example.contextmenudemo; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.ContextMenu; 
+
+import android.view.MenuItem; 
+
+import android.view.View; 
+
+import android.widget.TextView; 
+
+import android.widget.Toast; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+TextView textView; 
+
+final int MENU_EDIT = 1; 
+
+final int MENU_SHARE = 2; 
+
+final int MENU_DELETE = 3; 
+
+ 
+
+
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+textView = findViewById(R.id.textView); 
+
+ 
+
+// Register the TextView for context menu 
+
+registerForContextMenu(textView); 
+
+} 
+
+ 
+
+@Override 
+
+public void onCreateContextMenu(ContextMenu menu, View v, 
+
+ContextMenu.ContextMenuInfo menuInfo) { 
+
+super.onCreateContextMenu(menu, v, menuInfo); 
+
+ 
+
+menu.setHeaderTitle("Select Action"); 
+
+menu.add(0, MENU_EDIT, 0, "Edit"); 
+
+menu.add(0, MENU_SHARE, 1, "Share"); 
+
+menu.add(0, MENU_DELETE, 2, "Delete"); 
+
+} 
+
+ 
+
+@Override 
+
+public boolean onContextItemSelected(MenuItem item) { 
+
+switch (item.getItemId()) { 
+
+case MENU_EDIT: 
+
+Toast.makeText(this, "Edit selected", Toast.LENGTH_SHORT).show(); 
+
+return true; 
+
+
+
+case MENU_SHARE: 
+
+Toast.makeText(this, "Share selected", Toast.LENGTH_SHORT).show(); 
+
+return true; 
+
+case MENU_DELETE: 
+
+Toast.makeText(this, "Delete selected", Toast.LENGTH_SHORT).show(); 
+
+return true; 
+
+default: 
+
+return super.onContextItemSelected(item); 
+
+} 
+
+} 
+
+}

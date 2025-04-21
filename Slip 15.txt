@@ -1,0 +1,780 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:padding="24dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- Student Name --> 
+
+<EditText 
+
+android:id="@+id/etName" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Name" 
+
+android:inputType="text"/> 
+
+ 
+
+<!-- Student Surname --> 
+
+<EditText 
+
+android:id="@+id/etSurname" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Surname" 
+
+android:inputType="text"/> 
+
+ 
+
+<!-- Student Class --> 
+
+
+
+<EditText 
+
+android:id="@+id/etClass" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Class" 
+
+android:inputType="text"/> 
+
+ 
+
+<!-- Student Gender --> 
+
+<RadioGroup 
+
+android:id="@+id/radioGroupGender" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:orientation="horizontal"> 
+
+ 
+
+<RadioButton 
+
+android:id="@+id/rbMale" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Male"/> 
+
+ 
+
+<RadioButton 
+
+android:id="@+id/rbFemale" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Female"/> 
+
+</RadioGroup> 
+
+ 
+
+<!-- Student Hobbies --> 
+
+
+
+<EditText 
+
+android:id="@+id/etHobbies" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Hobbies" 
+
+android:inputType="text"/> 
+
+ 
+
+<!-- Student Marks --> 
+
+<EditText 
+
+android:id="@+id/etMarks" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Marks" 
+
+android:inputType="number"/> 
+
+ 
+
+<!-- Submit Button --> 
+
+<Button 
+
+android:id="@+id/btnSubmit" 
+
+android:text="Submit" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="20dp"/> 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.studentdetailsdemo; 
+
+ 
+
+
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.*; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etName, etSurname, etClass, etHobbies, etMarks; 
+
+RadioGroup radioGroupGender; 
+
+Button btnSubmit; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etName = findViewById(R.id.etName); 
+
+etSurname = findViewById(R.id.etSurname); 
+
+etClass = findViewById(R.id.etClass); 
+
+radioGroupGender = findViewById(R.id.radioGroupGender); 
+
+etHobbies = findViewById(R.id.etHobbies); 
+
+etMarks = findViewById(R.id.etMarks); 
+
+btnSubmit = findViewById(R.id.btnSubmit); 
+
+ 
+
+btnSubmit.setOnClickListener(v -> { 
+
+// Get values from input fields 
+
+
+
+String name = etName.getText().toString(); 
+
+String surname = etSurname.getText().toString(); 
+
+String studentClass = etClass.getText().toString(); 
+
+String hobbies = etHobbies.getText().toString(); 
+
+String marks = etMarks.getText().toString(); 
+
+ 
+
+// Get the selected gender 
+
+int selectedGenderId = radioGroupGender.getCheckedRadioButtonId(); 
+
+RadioButton selectedGender = findViewById(selectedGenderId); 
+
+String gender = selectedGender != null ? selectedGender.getText().toString() : "Not 
+Selected"; 
+
+ 
+
+// Prepare data to pass to next activity 
+
+Intent intent = new Intent(MainActivity.this, DisplayActivity.class); 
+
+intent.putExtra("NAME", name); 
+
+intent.putExtra("SURNAME", surname); 
+
+intent.putExtra("CLASS", studentClass); 
+
+intent.putExtra("GENDER", gender); 
+
+intent.putExtra("HOBBIES", hobbies); 
+
+intent.putExtra("MARKS", marks); 
+
+ 
+
+// Start DisplayActivity 
+
+startActivity(intent); 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+
+
+Activity2.xml 
+
+<!-- res/layout/activity_display.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="24dp"> 
+
+ 
+
+<TableLayout 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:stretchColumns="1"> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Name:" 
+
+android:textStyle="bold" /> 
+
+<TextView 
+
+android:id="@+id/tvName" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</TableRow> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Surname:" 
+
+android:textStyle="bold" /> 
+
+<TextView 
+
+android:id="@+id/tvSurname" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</TableRow> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Class:" 
+
+android:textStyle="bold" /> 
+
+<TextView 
+
+android:id="@+id/tvClass" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</TableRow> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Gender:" 
+
+android:textStyle="bold" /> 
+
+
+
+<TextView 
+
+android:id="@+id/tvGender" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</TableRow> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Hobbies:" 
+
+android:textStyle="bold" /> 
+
+<TextView 
+
+android:id="@+id/tvHobbies" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</TableRow> 
+
+ 
+
+<TableRow> 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Marks:" 
+
+android:textStyle="bold" /> 
+
+<TextView 
+
+android:id="@+id/tvMarks" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+
+
+</TableRow> 
+
+</TableLayout> 
+
+</LinearLayout> 
+
+ 
+
+Activity2.java 
+
+// DisplayActivity.java 
+
+package com.example.studentdetailsdemo; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.*; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class DisplayActivity extends AppCompatActivity { 
+
+ 
+
+TextView tvName, tvSurname, tvClass, tvGender, tvHobbies, tvMarks; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_display); 
+
+ 
+
+tvName = findViewById(R.id.tvName); 
+
+tvSurname = findViewById(R.id.tvSurname); 
+
+tvClass = findViewById(R.id.tvClass); 
+
+tvGender = findViewById(R.id.tvGender); 
+
+tvHobbies = findViewById(R.id.tvHobbies); 
+
+tvMarks = findViewById(R.id.tvMarks); 
+
+
+
+ 
+
+// Get data passed from MainActivity 
+
+Bundle extras = getIntent().getExtras(); 
+
+if (extras != null) { 
+
+tvName.setText(extras.getString("NAME")); 
+
+tvSurname.setText(extras.getString("SURNAME")); 
+
+tvClass.setText(extras.getString("CLASS")); 
+
+tvGender.setText(extras.getString("GENDER")); 
+
+tvHobbies.setText(extras.getString("HOBBIES")); 
+
+tvMarks.setText(extras.getString("MARKS")); 
+
+} 
+
+} 
+
+} 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:gravity="center" 
+
+android:padding="24dp"> 
+
+ 
+
+<!-- Input field for number --> 
+
+<EditText 
+
+
+
+android:id="@+id/etNumber" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter a number" 
+
+android:inputType="number" 
+
+android:layout_marginBottom="20dp"/> 
+
+ 
+
+<!-- Button to calculate factorial --> 
+
+<Button 
+
+android:id="@+id/btnCalculate" 
+
+android:text="Calculate Factorial" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginBottom="20dp"/> 
+
+ 
+
+<!-- Optional: TextView to show result --> 
+
+<TextView 
+
+android:id="@+id/tvResult" 
+
+android:text="Result will be shown here" 
+
+android:textSize="18sp" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.factorialdemo; 
+
+ 
+
+import android.app.AlertDialog; 
+
+import android.content.DialogInterface; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.*; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etNumber; 
+
+Button btnCalculate; 
+
+TextView tvResult; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etNumber = findViewById(R.id.etNumber); 
+
+btnCalculate = findViewById(R.id.btnCalculate); 
+
+tvResult = findViewById(R.id.tvResult); 
+
+ 
+
+btnCalculate.setOnClickListener(v -> { 
+
+
+
+// Get the number input from EditText 
+
+String numberStr = etNumber.getText().toString(); 
+
+ 
+
+if (numberStr.isEmpty()) { 
+
+Toast.makeText(MainActivity.this, "Please enter a number", Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+ 
+
+int number = Integer.parseInt(numberStr); 
+
+ 
+
+// Calculate factorial 
+
+long factorial = calculateFactorial(number); 
+
+ 
+
+// Display result in an AlertDialog 
+
+showAlertDialog(factorial); 
+
+}); 
+
+} 
+
+ 
+
+// Method to calculate factorial 
+
+private long calculateFactorial(int number) { 
+
+long result = 1; 
+
+for (int i = 1; i <= number; i++) { 
+
+result *= i; 
+
+} 
+
+return result; 
+
+} 
+
+ 
+
+// Method to display AlertDialog with the result 
+
+
+
+private void showAlertDialog(long factorial) { 
+
+AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+
+builder.setTitle("Factorial Result") 
+
+.setMessage("The factorial is: " + factorial) 
+
+.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
+
+@Override 
+
+public void onClick(DialogInterface dialog, int which) { 
+
+// Do something when OK is clicked (if necessary) 
+
+} 
+
+}) 
+
+.setCancelable(true) 
+
+.show(); 
+
+} 
+
+}

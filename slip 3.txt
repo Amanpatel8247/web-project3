@@ -1,0 +1,192 @@
+1. Send “Hello” Message Using Intent (Two Activities)
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/buttonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Hello"/>
+</LinearLayout>
+
+MainActivity.java
+package com.example.hellosender;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button buttonSend;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        buttonSend = findViewById(R.id.buttonSend);
+
+        buttonSend.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SecondActivity.class);
+            intent.putExtra("message", "Hello");
+            startActivity(intent);
+        });
+    }
+}
+
+activity_second.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
+</LinearLayout>
+
+SecondActivity.java
+package com.example.hellosender;
+
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+
+    TextView textViewMessage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        textViewMessage = findViewById(R.id.textViewMessage);
+
+        String msg = getIntent().getStringExtra("message");
+        textViewMessage.setText(msg);
+    }
+}
+
+2. Simple Calculator
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/num1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number 1"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/num2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number 2"
+        android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
+
+    <Button
+        android:id="@+id/subtract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subtract"/>
+
+    <Button
+        android:id="@+id/multiply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multiply"/>
+
+    <Button
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Divide"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingTop="10dp"/>
+</LinearLayout>
+
+package com.example.calculator;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText num1, num2;
+    Button add, subtract, multiply, divide;
+    TextView result;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        num1 = findViewById(R.id.num1);
+        num2 = findViewById(R.id.num2);
+        add = findViewById(R.id.add);
+        subtract = findViewById(R.id.subtract);
+        multiply = findViewById(R.id.multiply);
+        divide = findViewById(R.id.divide);
+        result = findViewById(R.id.result);
+
+        add.setOnClickListener(v -> {
+            double a = Double.parseDouble(num1.getText().toString());
+            double b = Double.parseDouble(num2.getText().toString());
+            result.setText("Result: " + (a + b));
+        });
+
+        subtract.setOnClickListener(v -> {
+            double a = Double.parseDouble(num1.getText().toString());
+            double b = Double.parseDouble(num2.getText().toString());
+            result.setText("Result: " + (a - b));
+        });
+
+        multiply.setOnClickListener(v -> {
+            double a = Double.parseDouble(num1.getText().toString());
+            double b = Double.parseDouble(num2.getText().toString());
+            result.setText("Result: " + (a * b));
+        });
+
+        divide.setOnClickListener(v -> {
+            double a = Double.parseDouble(num1.getText().toString());
+            double b = Double.parseDouble(num2.getText().toString());
+            if (b != 0) {
+                result.setText("Result: " + (a / b));
+            } else {
+                result.setText("Cannot divide by zero");
+            }
+        });
+    }
+}

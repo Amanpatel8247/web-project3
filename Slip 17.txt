@@ -1,0 +1,716 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- Input for the first number --> 
+
+<EditText 
+
+android:id="@+id/etFirstNumber" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter First Number" 
+
+android:inputType="numberDecimal" /> 
+
+ 
+
+<!-- Input for the second number --> 
+
+<EditText 
+
+android:id="@+id/etSecondNumber" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Second Number" 
+
+android:inputType="numberDecimal" /> 
+
+ 
+
+<!-- Button to calculate power and average --> 
+
+
+
+<Button 
+
+android:id="@+id/btnCalculate" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Calculate Power and Average" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.powerandaverage; 
+
+ 
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private EditText etFirstNumber, etSecondNumber; 
+
+private Button btnCalculate; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etFirstNumber = findViewById(R.id.etFirstNumber); 
+
+etSecondNumber = findViewById(R.id.etSecondNumber); 
+
+btnCalculate = findViewById(R.id.btnCalculate); 
+
+ 
+
+btnCalculate.setOnClickListener(v -> { 
+
+// Get the numbers from the EditTexts 
+
+double num1 = Double.parseDouble(etFirstNumber.getText().toString()); 
+
+double num2 = Double.parseDouble(etSecondNumber.getText().toString()); 
+
+ 
+
+// Calculate the power and average 
+
+double power = Math.pow(num1, num2);  // Power of num1 raised to num2 
+
+double average = (num1 + num2) / 2;   // Average of num1 and num2 
+
+ 
+
+// Create an Intent to send the results to SecondActivity 
+
+Intent intent = new Intent(MainActivity.this, SecondActivity.class); 
+
+intent.putExtra("power", power); 
+
+intent.putExtra("average", average); 
+
+startActivity(intent); 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity2.xml 
+
+<!-- res/layout/activity_second.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- TextView to display power --> 
+
+<TextView 
+
+android:id="@+id/tvPower" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Power: " 
+
+android:textSize="18sp" 
+
+android:textColor="#000000" /> 
+
+ 
+
+<!-- TextView to display average --> 
+
+<TextView 
+
+android:id="@+id/tvAverage" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Average: " 
+
+android:textSize="18sp" 
+
+android:textColor="#000000" 
+
+android:layout_marginTop="20dp"/> 
+
+
+
+ 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity2.java 
+
+// SecondActivity.java 
+
+package com.example.powerandaverage; 
+
+ 
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+import android.widget.TextView; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class SecondActivity extends AppCompatActivity { 
+
+ 
+
+private TextView tvPower, tvAverage; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_second); 
+
+ 
+
+tvPower = findViewById(R.id.tvPower); 
+
+tvAverage = findViewById(R.id.tvAverage); 
+
+ 
+
+// Get the data from the intent 
+
+Intent intent = getIntent(); 
+
+double power = intent.getDoubleExtra("power", 0); 
+
+
+
+double average = intent.getDoubleExtra("average", 0); 
+
+ 
+
+// Set the results in the TextViews 
+
+tvPower.setText("Power: " + power); 
+
+tvAverage.setText("Average: " + average); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- Input for the customer's name --> 
+
+<EditText 
+
+android:id="@+id/etName" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Customer Name" 
+
+android:inputType="text" /> 
+
+
+
+ 
+
+<!-- Input for the customer's address --> 
+
+<EditText 
+
+android:id="@+id/etAddress" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Customer Address" 
+
+android:inputType="text" /> 
+
+ 
+
+<!-- Input for the customer's phone number --> 
+
+<EditText 
+
+android:id="@+id/etPhno" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter Customer Phone Number" 
+
+android:inputType="phone" /> 
+
+ 
+
+<!-- Button to insert customer details --> 
+
+<Button 
+
+android:id="@+id/btnInsertCustomer" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Insert Customer" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- Button to show all customer details --> 
+
+<Button 
+
+android:id="@+id/btnShowCustomers" 
+
+
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Show All Customers" 
+
+android:layout_marginTop="20dp"/> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.customerapp; 
+
+ 
+
+import android.database.Cursor; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private EditText etName, etAddress, etPhno; 
+
+private Button btnInsertCustomer, btnShowCustomers; 
+
+private DatabaseHelper dbHelper; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+// Initialize the views 
+
+etName = findViewById(R.id.etName); 
+
+etAddress = findViewById(R.id.etAddress); 
+
+etPhno = findViewById(R.id.etPhno); 
+
+btnInsertCustomer = findViewById(R.id.btnInsertCustomer); 
+
+btnShowCustomers = findViewById(R.id.btnShowCustomers); 
+
+ 
+
+// Initialize the DatabaseHelper 
+
+dbHelper = new DatabaseHelper(this); 
+
+ 
+
+// Insert customer data when button is clicked 
+
+btnInsertCustomer.setOnClickListener(v -> { 
+
+String name = etName.getText().toString(); 
+
+String address = etAddress.getText().toString(); 
+
+String phno = etPhno.getText().toString(); 
+
+ 
+
+if (!name.isEmpty() && !address.isEmpty() && !phno.isEmpty()) { 
+
+long result = dbHelper.insertCustomer(name, address, phno); 
+
+if (result != -1) { 
+
+Toast.makeText(MainActivity.this, "Customer Inserted Successfully!", 
+Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "Error Inserting Customer", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show(); 
+
+
+
+} 
+
+}); 
+
+ 
+
+// Show all customer details when button is clicked 
+
+btnShowCustomers.setOnClickListener(v -> { 
+
+Cursor cursor = dbHelper.getAllCustomers(); 
+
+if (cursor != null && cursor.getCount() > 0) { 
+
+StringBuilder customerList = new StringBuilder(); 
+
+while (cursor.moveToNext()) { 
+
+int id = cursor.getInt(cursor.getColumnIndex("id")); 
+
+String name = cursor.getString(cursor.getColumnIndex("name")); 
+
+String address = cursor.getString(cursor.getColumnIndex("address")); 
+
+String phno = cursor.getString(cursor.getColumnIndex("phno")); 
+
+ 
+
+customerList.append("ID: ").append(id).append("\n") 
+
+.append("Name: ").append(name).append("\n") 
+
+.append("Address: ").append(address).append("\n") 
+
+.append("Phone: ").append(phno).append("\n\n"); 
+
+} 
+
+Toast.makeText(MainActivity.this, customerList.toString(), Toast.LENGTH_LONG).show(); 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "No Customers Found", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+
+
+ 
+
+DBhelper.java 
+
+// DatabaseHelper.java 
+
+package com.example.customerapp; 
+
+ 
+
+import android.content.ContentValues; 
+
+import android.content.Context; 
+
+import android.database.Cursor; 
+
+import android.database.sqlite.SQLiteDatabase; 
+
+import android.database.sqlite.SQLiteOpenHelper; 
+
+ 
+
+public class DatabaseHelper extends SQLiteOpenHelper { 
+
+ 
+
+// Database Name 
+
+private static final String DATABASE_NAME = "customerDB"; 
+
+private static final int DATABASE_VERSION = 1; 
+
+ 
+
+// Customer Table 
+
+private static final String TABLE_CUSTOMER = "Customer"; 
+
+private static final String COLUMN_ID = "id"; 
+
+private static final String COLUMN_NAME = "name"; 
+
+private static final String COLUMN_ADDRESS = "address"; 
+
+private static final String COLUMN_PHNO = "phno"; 
+
+ 
+
+// SQL query to create the table 
+
+private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_CUSTOMER + " (" 
+
++ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+
++ COLUMN_NAME + " TEXT, " 
+
+
+
++ COLUMN_ADDRESS + " TEXT, " 
+
++ COLUMN_PHNO + " TEXT);"; 
+
+ 
+
+// Constructor 
+
+public DatabaseHelper(Context context) { 
+
+super(context, DATABASE_NAME, null, DATABASE_VERSION); 
+
+} 
+
+ 
+
+// Create the table when the database is created 
+
+@Override 
+
+public void onCreate(SQLiteDatabase db) { 
+
+db.execSQL(CREATE_TABLE); 
+
+} 
+
+ 
+
+// Update the database (if needed) 
+
+@Override 
+
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { 
+
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER); 
+
+onCreate(db); 
+
+} 
+
+ 
+
+// Method to insert a new customer record 
+
+public long insertCustomer(String name, String address, String phno) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put(COLUMN_NAME, name); 
+
+values.put(COLUMN_ADDRESS, address); 
+
+values.put(COLUMN_PHNO, phno); 
+
+
+
+long result = db.insert(TABLE_CUSTOMER, null, values); 
+
+db.close(); 
+
+return result; 
+
+} 
+
+ 
+
+// Method to fetch all customer records 
+
+public Cursor getAllCustomers() { 
+
+SQLiteDatabase db = this.getReadableDatabase(); 
+
+return db.rawQuery("SELECT * FROM " + TABLE_CUSTOMER, null); 
+
+} 
+
+}

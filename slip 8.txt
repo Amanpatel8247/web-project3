@@ -1,0 +1,185 @@
+1. Application to Demonstrate Activity Life Cycle
+package com.example.lifecycleapp;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d("LifeCycle", "onCreate called");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("LifeCycle", "onStart called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("LifeCycle", "onResume called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("LifeCycle", "onPause called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("LifeCycle", "onStop called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("LifeCycle", "onRestart called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("LifeCycle", "onDestroy called");
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:text="Check Logcat for Life Cycle Methods"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+2. Student Info App with File Storage and Display in Another Activity
+MainActivity.java
+package com.example.studentfileapp;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.FileOutputStream;
+
+public class MainActivity extends AppCompatActivity {
+    EditText studentInfo;
+    Button saveButton, viewButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        studentInfo = findViewById(R.id.editTextInfo);
+        saveButton = findViewById(R.id.btnSave);
+        viewButton = findViewById(R.id.btnView);
+
+        saveButton.setOnClickListener(v -> {
+            String info = studentInfo.getText().toString();
+            try {
+                FileOutputStream fos = openFileOutput("students.txt", Context.MODE_PRIVATE);
+                fos.write(info.getBytes());
+                fos.close();
+                studentInfo.setText("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        viewButton.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+            startActivity(i);
+        });
+    }
+}
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/editTextInfo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="Enter 10 Student Information (Name, Roll, etc.)"
+        android:inputType="textMultiLine"
+        android:gravity="top"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"/>
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Info"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
+
+DisplayActivity.java
+package com.example.studentfileapp;
+
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.FileInputStream;
+
+public class DisplayActivity extends AppCompatActivity {
+    TextView display;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display);
+        display = findViewById(R.id.textViewDisplay);
+
+        try {
+            FileInputStream fis = openFileInput("students.txt");
+            int c;
+            StringBuilder temp = new StringBuilder();
+            while ((c = fis.read()) != -1) {
+                temp.append((char) c);
+            }
+            display.setText(temp.toString());
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+activity_display.xml
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="16dp"/>
+</ScrollView>

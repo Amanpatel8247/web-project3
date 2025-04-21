@@ -1,0 +1,351 @@
+1. Android App to Read a Positive Number and Display Its Factorial in Another Activity
+package com.example.factorialapp;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText inputNumber;
+    Button btnCalculate;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        inputNumber = findViewById(R.id.inputNumber);
+        btnCalculate = findViewById(R.id.btnCalculate);
+
+        btnCalculate.setOnClickListener(v -> {
+            int number = Integer.parseInt(inputNumber.getText().toString());
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+            intent.putExtra("number", number);
+            startActivity(intent);
+        });
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/inputNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a positive number"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate Factorial"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+ResultActivity.java
+package com.example.factorialapp;
+
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ResultActivity extends AppCompatActivity {
+
+    TextView resultText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+        resultText = findViewById(R.id.resultText);
+        int number = getIntent().getIntExtra("number", 1);
+        long fact = factorial(number);
+        resultText.setText("Factorial of " + number + " is " + fact);
+    }
+
+    long factorial(int n) {
+        long result = 1;
+        for (int i = 1; i <= n; i++) result *= i;
+        return result;
+    }
+}
+
+activity_result.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Factorial will appear here"
+        android:textSize="20sp"/>
+</LinearLayout>
+
+ 2. Create and Insert Data in Emp and Dept Tables
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Add Department Section -->
+    <EditText
+        android:id="@+id/deptNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Department Name"/>
+    <EditText
+        android:id="@+id/deptLocationInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location"/>
+    <Button
+        android:id="@+id/addDeptButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Department"/>
+
+    <ListView
+        android:id="@+id/deptListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Add Employee Section -->
+    <EditText
+        android:id="@+id/empNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Employee Name"/>
+    <EditText
+        android:id="@+id/empAddressInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address"/>
+    <EditText
+        android:id="@+id/empPhoneInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone"/>
+    <EditText
+        android:id="@+id/empSalaryInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Salary"
+        android:inputType="numberDecimal"/>
+    <EditText
+        android:id="@+id/empDeptInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Department Name"/>
+    <Button
+        android:id="@+id/addEmpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Employee"/>
+
+    <ListView
+        android:id="@+id/empListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Delete Employees by Department -->
+    <EditText
+        android:id="@+id/deleteDeptInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Department to Delete Employees"/>
+    <Button
+        android:id="@+id/deleteEmpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Employees"/>
+</LinearLayout>
+
+
+package com.example.empdeptmanager;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    DatabaseHelper dbHelper;
+    EditText deptNameInput, deptLocationInput, empNameInput, empAddressInput, empPhoneInput, empSalaryInput, empDeptInput, deleteDeptInput;
+    Button addDeptButton, addEmpButton, deleteEmpButton;
+    ListView deptListView, empListView;
+    ArrayList<String> deptList, empList;
+    ArrayAdapter<String> deptAdapter, empAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        dbHelper = new DatabaseHelper(this);
+
+
+        deptNameInput = findViewById(R.id.deptNameInput);
+        deptLocationInput = findViewById(R.id.deptLocationInput);
+        addDeptButton = findViewById(R.id.addDeptButton);
+        deptListView = findViewById(R.id.deptListView);
+
+        empNameInput = findViewById(R.id.empNameInput);
+        empAddressInput = findViewById(R.id.empAddressInput);
+        empPhoneInput = findViewById(R.id.empPhoneInput);
+        empSalaryInput = findViewById(R.id.empSalaryInput);
+        empDeptInput = findViewById(R.id.empDeptInput);
+        addEmpButton = findViewById(R.id.addEmpButton);
+        empListView = findViewById(R.id.empListView);
+
+        deleteDeptInput = findViewById(R.id.deleteDeptInput);
+        deleteEmpButton = findViewById(R.id.deleteEmpButton);
+
+
+        deptList = new ArrayList<>();
+        deptAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, deptList);
+        deptListView.setAdapter(deptAdapter);
+
+
+        empList = new ArrayList<>();
+        empAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, empList);
+        empListView.setAdapter(empAdapter);
+
+
+        loadDepartments();  // Ensure this method is defined below
+        loadEmployees();    // Ensure this method is defined below
+
+
+        addDeptButton.setOnClickListener(v -> {
+            dbHelper.insertDept(deptNameInput.getText().toString(), deptLocationInput.getText().toString());
+            loadDepartments(); // Refresh department list
+        });
+
+
+        addEmpButton.setOnClickListener(v -> {
+            dbHelper.insertEmp(empNameInput.getText().toString(), empAddressInput.getText().toString(), empPhoneInput.getText().toString(),
+                    Double.parseDouble(empSalaryInput.getText().toString()), empDeptInput.getText().toString());
+            loadEmployees(); // Refresh employee list
+        });
+    }
+
+
+    private void loadDepartments() {
+        deptList.clear(); // Clear old data
+        Cursor cursor = dbHelper.getAllDepartments(); // Fetch from database
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String deptName = cursor.getString(1); // Column 1 contains department name
+                deptList.add(deptName);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        deptAdapter.notifyDataSetChanged(); // Refresh ListView
+    }
+
+
+    private void loadEmployees() {
+        empList.clear(); // Clear old data
+        Cursor cursor = dbHelper.getAllEmployees(); // Fetch from database
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String empName = cursor.getString(1); // Column 1 contains employee name
+                empList.add(empName);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        empAdapter.notifyDataSetChanged(); // Refresh ListView
+    }
+}
+
+databasehelper.java
+package com.example.empdeptmanager;
+
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "Company.db";
+    private static final int DATABASE_VERSION = 1;
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE Dept (dept_no INTEGER PRIMARY KEY AUTOINCREMENT, dept_name TEXT UNIQUE, location TEXT)");
+        db.execSQL("CREATE TABLE Emp (emp_no INTEGER PRIMARY KEY AUTOINCREMENT, emp_name TEXT, address TEXT, phone TEXT, salary REAL, dept_name TEXT, FOREIGN KEY(dept_name) REFERENCES Dept(dept_name))");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS Dept");
+        db.execSQL("DROP TABLE IF EXISTS Emp");
+        onCreate(db);
+    }
+
+    public boolean insertDept(String deptName, String location) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("dept_name", deptName);
+        values.put("location", location);
+        long result = db.insert("Dept", null, values);
+        return result != -1;
+    }
+
+    public boolean insertEmp(String empName, String address, String phone, double salary, String deptName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("emp_name", empName);
+        values.put("address", address);
+        values.put("phone", phone);
+        values.put("salary", salary);
+        values.put("dept_name", deptName);
+        long result = db.insert("Emp", null, values);
+        return result != -1;
+    }
+
+    public Cursor getAllDepartments() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Dept", null);
+    }
+
+    public Cursor getAllEmployees() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Emp", null);
+    }
+
+    public int deleteEmployeesByDepartment(String deptName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("Emp", "dept_name = ?", new String[]{deptName});
+    }
+}

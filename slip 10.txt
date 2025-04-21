@@ -1,0 +1,120 @@
+1. Android Application Demonstrating RadioButton
+MainActivity.java
+package com.example.radiobuttondemo;
+
+import android.os.Bundle;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    RadioGroup radioGroup;
+    RadioButton radioMale, radioFemale;
+    TextView selectionText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        radioGroup = findViewById(R.id.radioGroup);
+        radioMale = findViewById(R.id.radioMale);
+        radioFemale = findViewById(R.id.radioFemale);
+        selectionText = findViewById(R.id.selectionText);
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton selected = findViewById(checkedId);
+            String selectedText = "Selected: " + selected.getText();
+            selectionText.setText(selectedText);
+            Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+        });
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/selectionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected:"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+2. Java Android Program to Demonstrate Menu Application
+package com.example.menuapp;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("Home");
+        menu.add("Settings");
+        menu.add("About");
+        menu.add("Exit");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String title = item.getTitle().toString();
+        Toast.makeText(this, title + " selected", Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu Demo App"
+        android:textSize="22sp"/>
+</LinearLayout>

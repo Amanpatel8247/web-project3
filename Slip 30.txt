@@ -1,0 +1,529 @@
+﻿Q1) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:padding="20dp" 
+
+android:gravity="center_horizontal" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<Switch 
+
+android:id="@+id/switchLight" 
+
+android:text="Light Switch" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:textSize="18sp" /> 
+
+ 
+
+<TextView 
+
+android:id="@+id/tvSwitchStatus" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Light is OFF" 
+
+android:textSize="16sp" 
+
+android:layout_marginBottom="20dp" 
+
+android:layout_marginTop="10dp"/> 
+
+ 
+
+<ToggleButton 
+
+android:id="@+id/toggleWifi" 
+
+
+
+android:textOn="WiFi ON" 
+
+android:textOff="WiFi OFF" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<TextView 
+
+android:id="@+id/tvToggleStatus" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="WiFi is OFF" 
+
+android:textSize="16sp" 
+
+android:layout_marginTop="10dp"/> 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+package com.example.switchtoggle; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.Switch; 
+
+import android.widget.TextView; 
+
+import android.widget.Toast; 
+
+import android.widget.ToggleButton; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+Switch switchLight; 
+
+
+
+ToggleButton toggleWifi; 
+
+TextView tvSwitchStatus, tvToggleStatus; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+switchLight = findViewById(R.id.switchLight); 
+
+toggleWifi = findViewById(R.id.toggleWifi); 
+
+tvSwitchStatus = findViewById(R.id.tvSwitchStatus); 
+
+tvToggleStatus = findViewById(R.id.tvToggleStatus); 
+
+ 
+
+// Switch Listener 
+
+switchLight.setOnCheckedChangeListener((buttonView, isChecked) -> { 
+
+if (isChecked) { 
+
+tvSwitchStatus.setText("Light is ON"); 
+
+Toast.makeText(this, "Light Turned ON", Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+tvSwitchStatus.setText("Light is OFF"); 
+
+Toast.makeText(this, "Light Turned OFF", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+ 
+
+// ToggleButton Listener 
+
+toggleWifi.setOnCheckedChangeListener((buttonView, isChecked) -> { 
+
+if (isChecked) { 
+
+tvToggleStatus.setText("WiFi is ON"); 
+
+
+
+Toast.makeText(this, "WiFi Enabled", Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+tvToggleStatus.setText("WiFi is OFF"); 
+
+Toast.makeText(this, "WiFi Disabled", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:padding="20dp" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<EditText android:id="@+id/etId" 
+
+android:hint="Enter ID" 
+
+android:inputType="number" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<EditText android:id="@+id/etName" 
+
+android:hint="Enter Name" 
+
+
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<EditText android:id="@+id/etAddress" 
+
+android:hint="Enter Address" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<EditText android:id="@+id/etPhno" 
+
+android:hint="Enter Phone Number" 
+
+android:inputType="phone" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnInsert" 
+
+android:text="Insert Company" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="10dp" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnDisplay" 
+
+android:text="Show All Companies" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="10dp" /> 
+
+</LinearLayout> 
+
+
+
+Activity.java 
+
+package com.example.companyapp; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etId, etName, etAddress, etPhno; 
+
+Button btnInsert, btnDisplay; 
+
+CompanyDbHelper dbHelper; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etId = findViewById(R.id.etId); 
+
+etName = findViewById(R.id.etName); 
+
+etAddress = findViewById(R.id.etAddress); 
+
+etPhno = findViewById(R.id.etPhno); 
+
+btnInsert = findViewById(R.id.btnInsert); 
+
+btnDisplay = findViewById(R.id.btnDisplay); 
+
+ 
+
+dbHelper = new CompanyDbHelper(this); 
+
+
+
+ 
+
+btnInsert.setOnClickListener(v -> { 
+
+int id = Integer.parseInt(etId.getText().toString()); 
+
+String name = etName.getText().toString(); 
+
+String address = etAddress.getText().toString(); 
+
+String phno = etPhno.getText().toString(); 
+
+ 
+
+dbHelper.insertCompany(id, name, address, phno); 
+
+Toast.makeText(this, "Company Inserted", Toast.LENGTH_SHORT).show(); 
+
+ 
+
+etId.setText(""); etName.setText(""); etAddress.setText(""); etPhno.setText(""); 
+
+}); 
+
+ 
+
+btnDisplay.setOnClickListener(v -> { 
+
+String data = dbHelper.getAllCompanies(); 
+
+if (data.isEmpty()) { 
+
+Toast.makeText(this, "No records found", Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+Toast.makeText(this, data, Toast.LENGTH_LONG).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+DBHelper.java 
+
+package com.example.companyapp; 
+
+
+
+ 
+
+import android.content.ContentValues; 
+
+import android.content.Context; 
+
+import android.database.Cursor; 
+
+import android.database.sqlite.SQLiteDatabase; 
+
+import android.database.sqlite.SQLiteOpenHelper; 
+
+ 
+
+public class CompanyDbHelper extends SQLiteOpenHelper { 
+
+ 
+
+private static final String DB_NAME = "CompanyDB"; 
+
+private static final int DB_VERSION = 1; 
+
+private static final String TABLE_NAME = "Company"; 
+
+ 
+
+public CompanyDbHelper(Context context) { 
+
+super(context, DB_NAME, null, DB_VERSION); 
+
+} 
+
+ 
+
+@Override 
+
+public void onCreate(SQLiteDatabase db) { 
+
+String query = "CREATE TABLE " + TABLE_NAME + " (" + 
+
+"id INTEGER PRIMARY KEY, " + 
+
+"name TEXT, " + 
+
+"address TEXT, " + 
+
+"phno TEXT)"; 
+
+db.execSQL(query); 
+
+} 
+
+ 
+
+@Override 
+
+
+
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { 
+
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); 
+
+onCreate(db); 
+
+} 
+
+ 
+
+public void insertCompany(int id, String name, String address, String phno) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put("id", id); 
+
+values.put("name", name); 
+
+values.put("address", address); 
+
+values.put("phno", phno); 
+
+db.insert(TABLE_NAME, null, values); 
+
+} 
+
+ 
+
+public String getAllCompanies() { 
+
+SQLiteDatabase db = this.getReadableDatabase(); 
+
+Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null); 
+
+StringBuilder builder = new StringBuilder(); 
+
+ 
+
+while (cursor.moveToNext()) { 
+
+builder.append("ID: ").append(cursor.getInt(0)) 
+
+.append(", Name: ").append(cursor.getString(1)) 
+
+.append(", Address: ").append(cursor.getString(2)) 
+
+.append(", Phone: ").append(cursor.getString(3)) 
+
+.append("\n"); 
+
+} 
+
+ 
+
+
+
+cursor.close(); 
+
+return builder.toString(); 
+
+} 
+
+}

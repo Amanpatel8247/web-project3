@@ -1,0 +1,443 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<EditText 
+
+android:id="@+id/etNumber" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter a positive number" 
+
+android:inputType="number" /> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnCalculate" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Calculate Factorial" 
+
+android:layout_marginTop="20dp" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.factorialapp; 
+
+ 
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etNumber; 
+
+Button btnCalculate; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etNumber = findViewById(R.id.etNumber); 
+
+btnCalculate = findViewById(R.id.btnCalculate); 
+
+ 
+
+btnCalculate.setOnClickListener(v -> { 
+
+String input = etNumber.getText().toString().trim(); 
+
+ 
+
+if (input.isEmpty()) { 
+
+
+
+Toast.makeText(this, "Please enter a number", Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+ 
+
+int number = Integer.parseInt(input); 
+
+ 
+
+if (number < 0) { 
+
+Toast.makeText(this, "Enter a positive number", Toast.LENGTH_SHORT).show(); 
+
+return; 
+
+} 
+
+ 
+
+long factorial = 1; 
+
+for (int i = 1; i <= number; i++) { 
+
+factorial *= i; 
+
+} 
+
+ 
+
+Intent intent = new Intent(MainActivity.this, ResultActivity.class); 
+
+intent.putExtra("number", number); 
+
+intent.putExtra("factorial", factorial); 
+
+startActivity(intent); 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+Activity2.xml 
+
+<!-- res/layout/activity_result.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+
+
+android:gravity="center" 
+
+android:padding="16dp" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/tvResult" 
+
+android:textSize="20sp" 
+
+android:textStyle="bold" 
+
+android:textColor="#000000" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity2.java 
+
+// ResultActivity.java 
+
+package com.example.factorialapp; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.TextView; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class ResultActivity extends AppCompatActivity { 
+
+ 
+
+TextView tvResult; 
+
+ 
+
+@Override 
+
+
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_result); 
+
+ 
+
+tvResult = findViewById(R.id.tvResult); 
+
+ 
+
+int number = getIntent().getIntExtra("number", 0); 
+
+long factorial = getIntent().getLongExtra("factorial", 1); 
+
+ 
+
+String result = "Factorial of " + number + " is:\n" + factorial; 
+
+tvResult.setText(result); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout 
+
+xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="24dp" 
+
+android:gravity="center"> 
+
+ 
+
+
+
+<Button 
+
+android:id="@+id/btnShowDialog" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Show Friends List" 
+
+android:padding="16dp"/> 
+
+ 
+
+<TextView 
+
+android:id="@+id/tvGreetingMessage" 
+
+android:text="Greeting Message Appears Here" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:textSize="18sp" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+ 
+
+// MainActivity.java 
+
+package com.example.customalertdialogdemo; 
+
+ 
+
+import android.content.DialogInterface; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.*; 
+
+import androidx.appcompat.app.AlertDialog; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+Button btnShowDialog; 
+
+TextView tvGreetingMessage; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+btnShowDialog = findViewById(R.id.btnShowDialog); 
+
+tvGreetingMessage = findViewById(R.id.tvGreetingMessage); 
+
+ 
+
+btnShowDialog.setOnClickListener(v -> { 
+
+showFriendDialog(); 
+
+}); 
+
+} 
+
+ 
+
+// Show a custom AlertDialog with friend buttons 
+
+private void showFriendDialog() { 
+
+// List of friends 
+
+String[] friends = {"John", "Emma", "Michael", "Sophia", "David"}; 
+
+ 
+
+// Create a custom AlertDialog 
+
+AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+
+builder.setTitle("Select a Friend") 
+
+.setItems(friends, new DialogInterface.OnClickListener() { 
+
+
+
+@Override 
+
+public void onClick(DialogInterface dialog, int which) { 
+
+String friendName = friends[which]; 
+
+// Greet the selected friend 
+
+greetFriend(friendName); 
+
+} 
+
+}) 
+
+.setCancelable(true); 
+
+ 
+
+// Show the dialog 
+
+builder.show(); 
+
+} 
+
+ 
+
+// Display greeting message for the selected friend 
+
+private void greetFriend(String friendName) { 
+
+String greeting = "Hello, " + friendName + "!"; 
+
+tvGreetingMessage.setText(greeting); 
+
+} 
+
+}

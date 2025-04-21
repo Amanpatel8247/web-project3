@@ -1,0 +1,360 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:gravity="center" 
+
+android:orientation="vertical"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/textView" 
+
+android:text="Activity Life Cycle Demo" 
+
+android:textSize="24sp" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"/> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.lifecycleapp; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.util.Log; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+
+
+ 
+
+String TAG = "ActivityLifeCycle"; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+Toast.makeText(this, "onCreate called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onCreate called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onStart() { 
+
+super.onStart(); 
+
+Toast.makeText(this, "onStart called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onStart called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onResume() { 
+
+super.onResume(); 
+
+Toast.makeText(this, "onResume called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onResume called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onPause() { 
+
+super.onPause(); 
+
+
+
+Toast.makeText(this, "onPause called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onPause called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onStop() { 
+
+super.onStop(); 
+
+Toast.makeText(this, "onStop called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onStop called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onRestart() { 
+
+super.onRestart(); 
+
+Toast.makeText(this, "onRestart called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onRestart called"); 
+
+} 
+
+ 
+
+@Override 
+
+protected void onDestroy() { 
+
+super.onDestroy(); 
+
+Toast.makeText(this, "onDestroy called", Toast.LENGTH_SHORT).show(); 
+
+Log.d(TAG, "onDestroy called"); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout 
+
+xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="24dp"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/tvSelectedDate" 
+
+android:text="Selected Date:" 
+
+android:textSize="18sp" 
+
+android:layout_marginBottom="16dp" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" /> 
+
+ 
+
+<!-- Inline DatePicker --> 
+
+<DatePicker 
+
+android:id="@+id/datePicker" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:calendarViewShown="true"/> 
+
+ 
+
+<!-- Button to show DatePickerDialog --> 
+
+<Button 
+
+
+
+android:id="@+id/btnPickDate" 
+
+android:layout_marginTop="20dp" 
+
+android:text="Open DatePicker Dialog" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.datepickerdemo; 
+
+ 
+
+import android.app.DatePickerDialog; 
+
+import android.os.Bundle; 
+
+import android.widget.*; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+import java.util.Calendar; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+TextView tvSelectedDate; 
+
+DatePicker datePicker; 
+
+Button btnPickDate; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+tvSelectedDate = findViewById(R.id.tvSelectedDate); 
+
+datePicker = findViewById(R.id.datePicker); 
+
+btnPickDate = findViewById(R.id.btnPickDate); 
+
+ 
+
+// Initialize with current date 
+
+Calendar calendar = Calendar.getInstance(); 
+
+updateTextView(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 
+calendar.get(Calendar.DAY_OF_MONTH)); 
+
+ 
+
+// Inline DatePicker listener 
+
+datePicker.setOnDateChangedListener((view, year, monthOfYear, dayOfMonth) -> { 
+
+updateTextView(year, monthOfYear, dayOfMonth); 
+
+}); 
+
+ 
+
+// Show DatePickerDialog on button click 
+
+btnPickDate.setOnClickListener(v -> { 
+
+int year = calendar.get(Calendar.YEAR); 
+
+int month = calendar.get(Calendar.MONTH); 
+
+int day = calendar.get(Calendar.DAY_OF_MONTH); 
+
+ 
+
+DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, 
+
+(view, year1, month1, day1) -> { 
+
+updateTextView(year1, month1, day1); 
+
+}, year, month, day); 
+
+dialog.show(); 
+
+}); 
+
+
+
+} 
+
+ 
+
+private void updateTextView(int year, int month, int day) { 
+
+String selectedDate = day + "/" + (month + 1) + "/" + year; 
+
+tvSelectedDate.setText("Selected Date: " + selectedDate); 
+
+} 
+
+}

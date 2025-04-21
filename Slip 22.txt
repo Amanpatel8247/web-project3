@@ -1,0 +1,783 @@
+﻿Q1) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:gravity="center" 
+
+android:padding="20dp"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/loginLabel" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Login" 
+
+android:textSize="24sp" 
+
+android:layout_marginBottom="20dp"/> 
+
+ 
+
+<EditText 
+
+android:id="@+id/username" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Username" 
+
+android:inputType="text" 
+
+android:layout_marginBottom="15dp"/> 
+
+ 
+
+<EditText 
+
+android:id="@+id/password" 
+
+
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Password" 
+
+android:inputType="textPassword" 
+
+android:layout_marginBottom="20dp"/> 
+
+ 
+
+<Button 
+
+android:id="@+id/loginButton" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Login" 
+
+android:padding="10dp" 
+
+android:layout_marginTop="10dp"/> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+package com.example.logindemo; 
+
+ 
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.Toast; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private EditText usernameEditText, passwordEditText; 
+
+private Button loginButton; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_login); 
+
+ 
+
+// Initialize views 
+
+usernameEditText = findViewById(R.id.username); 
+
+passwordEditText = findViewById(R.id.password); 
+
+loginButton = findViewById(R.id.loginButton); 
+
+ 
+
+// Set up the login button click listener 
+
+loginButton.setOnClickListener(new View.OnClickListener() { 
+
+@Override 
+
+public void onClick(View v) { 
+
+// Get input from EditTexts 
+
+String username = usernameEditText.getText().toString(); 
+
+String password = passwordEditText.getText().toString(); 
+
+ 
+
+// Hardcoded login check (you can replace this with your own logic) 
+
+if (username.equals("user") && password.equals("password")) { 
+
+// Login successful, move to the next activity 
+
+Intent intent = new Intent(MainActivity.this, WelcomeActivity.class); 
+
+startActivity(intent); 
+
+
+
+finish();  // Close the current activity (login screen) 
+
+} else { 
+
+// Login failed, show an error message 
+
+Toast.makeText(MainActivity.this, "Invalid username or password", 
+Toast.LENGTH_SHORT).show(); 
+
+} 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+Activity2.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:gravity="center" 
+
+android:padding="20dp"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/welcomeMessage" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Welcome to the next Activity!" 
+
+android:textSize="20sp" /> 
+
+ 
+
+</LinearLayout> 
+
+
+
+Activity2.java 
+
+package com.example.logindemo; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.TextView; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class WelcomeActivity extends AppCompatActivity { 
+
+ 
+
+private TextView welcomeMessageTextView; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_welcome); 
+
+ 
+
+// Initialize views 
+
+welcomeMessageTextView = findViewById(R.id.welcomeMessage); 
+
+ 
+
+// Display welcome message 
+
+welcomeMessageTextView.setText("Welcome to the next Activity!"); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+Manifest File- 
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+
+
+
+package="com.example.logindemo"> 
+
+ 
+
+<application 
+
+android:allowBackup="true" 
+
+android:icon="@mipmap/ic_launcher" 
+
+android:label="Login Demo" 
+
+android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> 
+
+ 
+
+<activity android:name=".WelcomeActivity"></activity> 
+
+ 
+
+<activity android:name=".MainActivity"> 
+
+<intent-filter> 
+
+<action android:name="android.intent.action.MAIN" /> 
+
+<category android:name="android.intent.category.LAUNCHER" /> 
+
+</intent-filter> 
+
+</activity> 
+
+ 
+
+</application> 
+
+</manifest> 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+
+
+android:orientation="vertical" 
+
+android:padding="20dp" 
+
+android:gravity="center"> 
+
+ 
+
+<EditText 
+
+android:id="@+id/editTextName" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Student Name" 
+
+android:inputType="text"/> 
+
+ 
+
+<EditText 
+
+android:id="@+id/editTextPhone" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Phone Number" 
+
+android:inputType="phone"/> 
+
+ 
+
+<Button 
+
+android:id="@+id/addStudentButton" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Add Student"/> 
+
+ 
+
+<EditText 
+
+android:id="@+id/editTextSidToDelete" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+
+
+android:hint="Enter Student ID to Delete" 
+
+android:inputType="number"/> 
+
+ 
+
+<Button 
+
+android:id="@+id/deleteStudentButton" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Delete Student"/> 
+
+ 
+
+<ListView 
+
+android:id="@+id/studentListView" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+package com.example.studentapp; 
+
+ 
+
+import android.database.Cursor; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.AdapterView; 
+
+import android.widget.ArrayAdapter; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.ListView; 
+
+import android.widget.Toast; 
+
+
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private EditText editTextName, editTextPhone, editTextSidToDelete; 
+
+private Button addStudentButton, deleteStudentButton; 
+
+private ListView studentListView; 
+
+private DBHelper dbHelper; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+// Initialize views 
+
+editTextName = findViewById(R.id.editTextName); 
+
+editTextPhone = findViewById(R.id.editTextPhone); 
+
+editTextSidToDelete = findViewById(R.id.editTextSidToDelete); 
+
+addStudentButton = findViewById(R.id.addStudentButton); 
+
+deleteStudentButton = findViewById(R.id.deleteStudentButton); 
+
+studentListView = findViewById(R.id.studentListView); 
+
+ 
+
+// Initialize DBHelper 
+
+dbHelper = new DBHelper(this); 
+
+ 
+
+// Button to add a student 
+
+addStudentButton.setOnClickListener(new View.OnClickListener() { 
+
+
+
+@Override 
+
+public void onClick(View v) { 
+
+String name = editTextName.getText().toString(); 
+
+String phone = editTextPhone.getText().toString(); 
+
+ 
+
+if (name.isEmpty() || phone.isEmpty()) { 
+
+Toast.makeText(MainActivity.this, "Please enter name and phone number", 
+Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+// Insert student to database 
+
+long result = dbHelper.addStudent(name, phone); 
+
+ 
+
+if (result != -1) { 
+
+Toast.makeText(MainActivity.this, "Student added", Toast.LENGTH_SHORT).show(); 
+
+loadStudents();  // Refresh the student list 
+
+} else { 
+
+Toast.makeText(MainActivity.this, "Error adding student", Toast.LENGTH_SHORT).show(); 
+
+} 
+
+} 
+
+} 
+
+}); 
+
+ 
+
+// Button to delete a student 
+
+deleteStudentButton.setOnClickListener(new View.OnClickListener() { 
+
+@Override 
+
+public void onClick(View v) { 
+
+String sidStr = editTextSidToDelete.getText().toString(); 
+
+ 
+
+
+
+if (sidStr.isEmpty()) { 
+
+Toast.makeText(MainActivity.this, "Please enter student ID to delete", 
+Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+int sid = Integer.parseInt(sidStr); 
+
+dbHelper.deleteStudent(sid); 
+
+Toast.makeText(MainActivity.this, "Student deleted", Toast.LENGTH_SHORT).show(); 
+
+loadStudents();  // Refresh the student list 
+
+} 
+
+} 
+
+}); 
+
+ 
+
+// Load the students into the ListView 
+
+loadStudents(); 
+
+} 
+
+ 
+
+private void loadStudents() { 
+
+Cursor cursor = dbHelper.getAllStudents(); 
+
+if (cursor != null) { 
+
+ArrayAdapter<String> adapter = new ArrayAdapter<>(this, 
+android.R.layout.simple_list_item_1); 
+
+while (cursor.moveToNext()) { 
+
+int sid = cursor.getInt(cursor.getColumnIndex("Sid")); 
+
+String name = cursor.getString(cursor.getColumnIndex("Sname")); 
+
+String phone = cursor.getString(cursor.getColumnIndex("phno")); 
+
+adapter.add("ID: " + sid + " Name: " + name + " Phone: " + phone); 
+
+} 
+
+studentListView.setAdapter(adapter); 
+
+cursor.close(); 
+
+
+
+} 
+
+} 
+
+} 
+
+ 
+
+ 
+
+DBHelper.java 
+
+package com.example.studentapp; 
+
+ 
+
+import android.content.ContentValues; 
+
+import android.content.Context; 
+
+import android.database.Cursor; 
+
+import android.database.sqlite.SQLiteDatabase; 
+
+import android.database.sqlite.SQLiteOpenHelper; 
+
+ 
+
+public class DBHelper extends SQLiteOpenHelper { 
+
+ 
+
+// Database Name and Version 
+
+private static final String DATABASE_NAME = "StudentDB"; 
+
+private static final int DATABASE_VERSION = 1; 
+
+ 
+
+// Table Name 
+
+private static final String TABLE_NAME = "Student"; 
+
+ 
+
+// Column Names 
+
+private static final String COLUMN_SID = "Sid"; 
+
+private static final String COLUMN_SNAME = "Sname"; 
+
+private static final String COLUMN_PHNO = "phno"; 
+
+ 
+
+
+
+// Create table SQL query 
+
+private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + 
+
+COLUMN_SID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+
+COLUMN_SNAME + " TEXT, " + 
+
+COLUMN_PHNO + " TEXT);"; 
+
+ 
+
+// Constructor 
+
+public DBHelper(Context context) { 
+
+super(context, DATABASE_NAME, null, DATABASE_VERSION); 
+
+} 
+
+ 
+
+@Override 
+
+public void onCreate(SQLiteDatabase db) { 
+
+db.execSQL(CREATE_TABLE); 
+
+} 
+
+ 
+
+@Override 
+
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { 
+
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); 
+
+onCreate(db); 
+
+} 
+
+ 
+
+// Method to add a student 
+
+public long addStudent(String name, String phno) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put(COLUMN_SNAME, name); 
+
+values.put(COLUMN_PHNO, phno); 
+
+
+
+ 
+
+return db.insert(TABLE_NAME, null, values); 
+
+} 
+
+ 
+
+// Method to delete a student 
+
+public void deleteStudent(int sid) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+db.delete(TABLE_NAME, COLUMN_SID + " = ?", new String[]{String.valueOf(sid)}); 
+
+} 
+
+ 
+
+// Method to get all students 
+
+public Cursor getAllStudents() { 
+
+SQLiteDatabase db = this.getReadableDatabase(); 
+
+return db.rawQuery("SELECT * FROM " + TABLE_NAME, null); 
+
+} 
+
+}

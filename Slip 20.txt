@@ -1,0 +1,375 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<TextView 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Select Gender" 
+
+android:textSize="18sp" 
+
+android:layout_marginBottom="10dp" /> 
+
+ 
+
+<RadioGroup 
+
+android:id="@+id/radioGroupGender" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content"> 
+
+ 
+
+<RadioButton 
+
+android:id="@+id/radioMale" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Male" /> 
+
+ 
+
+
+
+<RadioButton 
+
+android:id="@+id/radioFemale" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Female" /> 
+
+ 
+
+<RadioButton 
+
+android:id="@+id/radioOther" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Other" /> 
+
+</RadioGroup> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnSubmit" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Submit" 
+
+android:layout_marginTop="20dp" /> 
+
+ 
+
+<TextView 
+
+android:id="@+id/textResult" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="" 
+
+android:textSize="18sp" 
+
+android:layout_marginTop="20dp" /> 
+
+</LinearLayout> 
+
+
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.radiobuttonexample; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.Button; 
+
+import android.widget.RadioButton; 
+
+import android.widget.RadioGroup; 
+
+import android.widget.TextView; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+RadioGroup radioGroupGender; 
+
+Button btnSubmit; 
+
+TextView textResult; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+radioGroupGender = findViewById(R.id.radioGroupGender); 
+
+btnSubmit = findViewById(R.id.btnSubmit); 
+
+textResult = findViewById(R.id.textResult); 
+
+ 
+
+
+
+btnSubmit.setOnClickListener(view -> { 
+
+int selectedId = radioGroupGender.getCheckedRadioButtonId(); 
+
+ 
+
+if (selectedId == -1) { 
+
+Toast.makeText(MainActivity.this, "Please select a gender", Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+RadioButton selectedRadio = findViewById(selectedId); 
+
+String selection = selectedRadio.getText().toString(); 
+
+ 
+
+Toast.makeText(MainActivity.this, "Selected: " + selection, Toast.LENGTH_SHORT).show(); 
+
+textResult.setText("You selected: " + selection); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp"> 
+
+ 
+
+<!-- ListView to display items --> 
+
+
+
+<ListView 
+
+android:id="@+id/listView" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.listviewdemo; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.AdapterView; 
+
+import android.widget.ArrayAdapter; 
+
+import android.widget.ListView; 
+
+import android.widget.Toast; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private ListView listView; 
+
+private String[] games = {"Badminton", "Football", "Basketball", "Cricket", "Tennis"}; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+// Initialize the ListView 
+
+listView = findViewById(R.id.listView); 
+
+ 
+
+// Create an ArrayAdapter to bind the games array to the ListView 
+
+ArrayAdapter<String> adapter = new ArrayAdapter<>(this, 
+android.R.layout.simple_list_item_1, games); 
+
+listView.setAdapter(adapter); 
+
+ 
+
+// Set an OnItemClickListener to show a Toast message when an item is clicked 
+
+listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { 
+
+@Override 
+
+public void onItemClick(AdapterView<?> parent, View view, int position, long id) { 
+
+String selectedGame = games[position];  // Get the clicked item (game name) 
+
+Toast.makeText(MainActivity.this, "You selected: " + selectedGame, 
+Toast.LENGTH_SHORT).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+ManiFest File 
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+
+package="com.example.listviewdemo"> 
+
+ 
+
+<application 
+
+
+
+android:allowBackup="true" 
+
+android:icon="@mipmap/ic_launcher" 
+
+android:label="ListView Demo" 
+
+android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> 
+
+ 
+
+<activity android:name=".MainActivity"> 
+
+<intent-filter> 
+
+<action android:name="android.intent.action.MAIN" /> 
+
+<category android:name="android.intent.category.LAUNCHER" /> 
+
+</intent-filter> 
+
+</activity> 
+
+ 
+
+</application> 
+
+</manifest>

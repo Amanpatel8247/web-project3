@@ -1,0 +1,486 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:gravity="center" 
+
+android:padding="20dp"> 
+
+ 
+
+<TextView 
+
+android:id="@+id/textRating" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Your Rating: 0.0" 
+
+android:textSize="20sp" 
+
+android:layout_marginBottom="20dp"/> 
+
+ 
+
+<RatingBar 
+
+android:id="@+id/ratingBar" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:numStars="5" 
+
+android:stepSize="1.0" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.ratingbarexample; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.RatingBar; 
+
+import android.widget.TextView; 
+
+import android.widget.Toast; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+RatingBar ratingBar; 
+
+TextView textRating; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+ratingBar = findViewById(R.id.ratingBar); 
+
+textRating = findViewById(R.id.textRating); 
+
+ 
+
+ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> { 
+
+String ratingStr = "Your Rating: " + rating; 
+
+textRating.setText(ratingStr); 
+
+Toast.makeText(MainActivity.this, "You selected " + rating + " stars", 
+Toast.LENGTH_SHORT).show(); 
+
+
+
+}); 
+
+} 
+
+} 
+
+ 
+
+Manifest File 
+
+<application 
+
+...> 
+
+<activity android:name=".MainActivity"> 
+
+<intent-filter> 
+
+<action android:name="android.intent.action.MAIN"/> 
+
+<category android:name="android.intent.category.LAUNCHER"/> 
+
+</intent-filter> 
+
+</activity> 
+
+</application> 
+
+ 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:orientation="vertical" 
+
+android:padding="20dp" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent"> 
+
+ 
+
+<EditText android:id="@+id/etEno" 
+
+android:hint="Enter Employee No" 
+
+
+
+android:inputType="number" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+ 
+
+<EditText android:id="@+id/etEname" 
+
+android:hint="Enter Name" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+ 
+
+<EditText android:id="@+id/etDesignation" 
+
+android:hint="Enter Designation" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+ 
+
+<EditText android:id="@+id/etSalary" 
+
+android:hint="Enter Salary" 
+
+android:inputType="numberDecimal" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content"/> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnInsert" 
+
+android:text="Insert" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="10dp"/> 
+
+ 
+
+<Button 
+
+
+
+android:id="@+id/btnDisplay" 
+
+android:text="Display All" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="10dp"/> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+Activity.java 
+
+package com.example.employeedb; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import android.widget.EditText; 
+
+import android.widget.Toast; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etEno, etEname, etDesignation, etSalary; 
+
+Button btnInsert, btnDisplay; 
+
+EmployeeDbHelper dbHelper; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+etEno = findViewById(R.id.etEno); 
+
+etEname = findViewById(R.id.etEname); 
+
+etDesignation = findViewById(R.id.etDesignation); 
+
+etSalary = findViewById(R.id.etSalary); 
+
+btnInsert = findViewById(R.id.btnInsert); 
+
+btnDisplay = findViewById(R.id.btnDisplay); 
+
+ 
+
+dbHelper = new EmployeeDbHelper(this); 
+
+ 
+
+btnInsert.setOnClickListener(v -> { 
+
+int eno = Integer.parseInt(etEno.getText().toString()); 
+
+String ename = etEname.getText().toString(); 
+
+String designation = etDesignation.getText().toString(); 
+
+double salary = Double.parseDouble(etSalary.getText().toString()); 
+
+ 
+
+dbHelper.insertEmployee(eno, ename, designation, salary); 
+
+Toast.makeText(MainActivity.this, "Employee Inserted", Toast.LENGTH_SHORT).show(); 
+
+etEno.setText(""); etEname.setText(""); etDesignation.setText(""); etSalary.setText(""); 
+
+}); 
+
+ 
+
+btnDisplay.setOnClickListener(v -> { 
+
+String data = dbHelper.getAllEmployees(); 
+
+if (data.isEmpty()) { 
+
+Toast.makeText(this, "No records found.", Toast.LENGTH_SHORT).show(); 
+
+} else { 
+
+
+
+Toast.makeText(this, data, Toast.LENGTH_LONG).show(); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+ 
+
+DBHelper.java 
+
+package com.example.employeedb; 
+
+ 
+
+import android.content.ContentValues; 
+
+import android.content.Context; 
+
+import android.database.Cursor; 
+
+import android.database.sqlite.SQLiteDatabase; 
+
+import android.database.sqlite.SQLiteOpenHelper; 
+
+ 
+
+public class EmployeeDbHelper extends SQLiteOpenHelper { 
+
+ 
+
+private static final String DB_NAME = "EmployeeDB"; 
+
+private static final int DB_VERSION = 1; 
+
+private static final String TABLE_NAME = "Employee"; 
+
+ 
+
+public EmployeeDbHelper(Context context) { 
+
+super(context, DB_NAME, null, DB_VERSION); 
+
+} 
+
+ 
+
+
+
+@Override 
+
+public void onCreate(SQLiteDatabase db) { 
+
+String query = "CREATE TABLE " + TABLE_NAME + 
+
+"(Eno INTEGER PRIMARY KEY, Ename TEXT, Designation TEXT, Salary REAL)"; 
+
+db.execSQL(query); 
+
+} 
+
+ 
+
+@Override 
+
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { 
+
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); 
+
+onCreate(db); 
+
+} 
+
+ 
+
+public void insertEmployee(int eno, String ename, String designation, double salary) { 
+
+SQLiteDatabase db = this.getWritableDatabase(); 
+
+ContentValues values = new ContentValues(); 
+
+values.put("Eno", eno); 
+
+values.put("Ename", ename); 
+
+values.put("Designation", designation); 
+
+values.put("Salary", salary); 
+
+db.insert(TABLE_NAME, null, values); 
+
+} 
+
+ 
+
+public String getAllEmployees() { 
+
+SQLiteDatabase db = this.getReadableDatabase(); 
+
+Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null); 
+
+StringBuilder builder = new StringBuilder(); 
+
+ 
+
+
+
+while (cursor.moveToNext()) { 
+
+builder.append("Eno: ").append(cursor.getInt(0)) 
+
+.append(", Name: ").append(cursor.getString(1)) 
+
+.append(", Designation: ").append(cursor.getString(2)) 
+
+.append(", Salary: ").append(cursor.getDouble(3)) 
+
+.append("\n"); 
+
+} 
+
+ 
+
+cursor.close(); 
+
+return builder.toString(); 
+
+} 
+
+}

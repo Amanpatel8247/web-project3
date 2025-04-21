@@ -1,0 +1,104 @@
+1. Change Color, Font Size, and Style of College Name on Button Click
+package com.example.collegeapp;
+
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView collegeName;
+    Button changeStyle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        collegeName = findViewById(R.id.collegeName);
+        changeStyle = findViewById(R.id.changeStyle);
+
+        changeStyle.setOnClickListener(v -> {
+            collegeName.setTextColor(Color.RED);
+            collegeName.setTextSize(30);
+            collegeName.setTypeface(Typeface.SERIF, Typeface.BOLD_ITALIC);
+        });
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/collegeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My College"
+        android:textSize="24sp"
+        android:textStyle="normal"/>
+
+    <Button
+        android:id="@+id/changeStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Style"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+2. ImageSwitcher using setFactory()
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:src="@drawable/image_01"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next Image"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+package com.example.imageswicher;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ImageView imageView;
+    private int[] images = {R.drawable.image_01, R.drawable.image_02, R.drawable.image_03};
+    private int currentIndex = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = findViewById(R.id.imageView);
+        Button btnNext = findViewById(R.id.btnNext);
+
+        // Next Button Click
+        btnNext.setOnClickListener(v -> {
+            currentIndex = (currentIndex + 1) % images.length;
+            imageView.setImageResource(images[currentIndex]);
+        });
+    }
+}

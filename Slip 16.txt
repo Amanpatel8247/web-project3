@@ -1,0 +1,622 @@
+﻿Q1) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<androidx.constraintlayout.widget.ConstraintLayout 
+xmlns:android="http://schemas.android.com/apk/res/android" 
+
+xmlns:app="http://schemas.android.com/apk/res-auto" 
+
+xmlns:tools="http://schemas.android.com/tools" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+tools:context=".MainActivity"> 
+
+ 
+
+<!-- Input field for number 1 --> 
+
+<EditText 
+
+android:id="@+id/etNumber1" 
+
+android:layout_width="0dp" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter first number" 
+
+android:inputType="number" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toTopOf="parent" 
+
+android:layout_marginTop="50dp" 
+
+android:padding="10dp"/> 
+
+ 
+
+<!-- Input field for number 2 --> 
+
+<EditText 
+
+android:id="@+id/etNumber2" 
+
+
+
+android:layout_width="0dp" 
+
+android:layout_height="wrap_content" 
+
+android:hint="Enter second number" 
+
+android:inputType="number" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/etNumber1" 
+
+android:layout_marginTop="20dp" 
+
+android:padding="10dp"/> 
+
+ 
+
+<!-- Button for Addition --> 
+
+<Button 
+
+android:id="@+id/btnAdd" 
+
+android:text="Add" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/etNumber2" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- Button for Subtraction --> 
+
+<Button 
+
+android:id="@+id/btnSubtract" 
+
+android:text="Subtract" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/btnAdd" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- Button for Multiplication --> 
+
+<Button 
+
+android:id="@+id/btnMultiply" 
+
+android:text="Multiply" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/btnSubtract" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- Button for Division --> 
+
+<Button 
+
+android:id="@+id/btnDivide" 
+
+android:text="Divide" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/btnMultiply" 
+
+android:layout_marginTop="20dp"/> 
+
+ 
+
+<!-- TextView to display result --> 
+
+<TextView 
+
+
+
+android:id="@+id/tvResult" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Result: " 
+
+android:textSize="18sp" 
+
+android:textColor="#000000" 
+
+app:layout_constraintEnd_toEndOf="parent" 
+
+app:layout_constraintStart_toStartOf="parent" 
+
+app:layout_constraintTop_toBottomOf="@id/btnDivide" 
+
+android:layout_marginTop="30dp"/> 
+
+ 
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.arithmeticoperations; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.*; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+EditText etNumber1, etNumber2; 
+
+Button btnAdd, btnSubtract, btnMultiply, btnDivide; 
+
+TextView tvResult; 
+
+
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+// Initialize views 
+
+etNumber1 = findViewById(R.id.etNumber1); 
+
+etNumber2 = findViewById(R.id.etNumber2); 
+
+btnAdd = findViewById(R.id.btnAdd); 
+
+btnSubtract = findViewById(R.id.btnSubtract); 
+
+btnMultiply = findViewById(R.id.btnMultiply); 
+
+btnDivide = findViewById(R.id.btnDivide); 
+
+tvResult = findViewById(R.id.tvResult); 
+
+ 
+
+// Perform addition 
+
+btnAdd.setOnClickListener(v -> { 
+
+double num1 = Double.parseDouble(etNumber1.getText().toString()); 
+
+double num2 = Double.parseDouble(etNumber2.getText().toString()); 
+
+double result = num1 + num2; 
+
+tvResult.setText("Result: " + result); 
+
+}); 
+
+ 
+
+// Perform subtraction 
+
+btnSubtract.setOnClickListener(v -> { 
+
+double num1 = Double.parseDouble(etNumber1.getText().toString()); 
+
+double num2 = Double.parseDouble(etNumber2.getText().toString()); 
+
+double result = num1 - num2; 
+
+
+
+tvResult.setText("Result: " + result); 
+
+}); 
+
+ 
+
+// Perform multiplication 
+
+btnMultiply.setOnClickListener(v -> { 
+
+double num1 = Double.parseDouble(etNumber1.getText().toString()); 
+
+double num2 = Double.parseDouble(etNumber2.getText().toString()); 
+
+double result = num1 * num2; 
+
+tvResult.setText("Result: " + result); 
+
+}); 
+
+ 
+
+// Perform division 
+
+btnDivide.setOnClickListener(v -> { 
+
+double num1 = Double.parseDouble(etNumber1.getText().toString()); 
+
+double num2 = Double.parseDouble(etNumber2.getText().toString()); 
+
+ 
+
+// Check for division by zero 
+
+if (num2 != 0) { 
+
+double result = num1 / num2; 
+
+tvResult.setText("Result: " + result); 
+
+} else { 
+
+tvResult.setText("Error: Division by zero"); 
+
+} 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+
+
+Q2) 
+
+Activity.xml 
+
+<!-- res/layout/activity_main.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- Button to send notification --> 
+
+<Button 
+
+android:id="@+id/btnSendNotification" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Send Notification" 
+
+android:layout_marginTop="50dp" /> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+Activity.java 
+
+// MainActivity.java 
+
+package com.example.notificationdemo; 
+
+ 
+
+import android.app.Notification; 
+
+import android.app.NotificationChannel; 
+
+import android.app.NotificationManager; 
+
+
+
+import android.content.Context; 
+
+import android.content.Intent; 
+
+import android.os.Build; 
+
+import android.os.Bundle; 
+
+import android.view.View; 
+
+import android.widget.Button; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+private Button btnSendNotification; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+btnSendNotification = findViewById(R.id.btnSendNotification); 
+
+ 
+
+btnSendNotification.setOnClickListener(v -> { 
+
+// Send the notification 
+
+sendNotification(); 
+
+ 
+
+// Start SecondActivity to display the message 
+
+Intent intent = new Intent(MainActivity.this, SecondActivity.class); 
+
+intent.putExtra("notificationMessage", "Hello, this is your notification message!"); 
+
+startActivity(intent); 
+
+}); 
+
+
+
+} 
+
+ 
+
+// Function to send the notification 
+
+private void sendNotification() { 
+
+// NotificationManager 
+
+NotificationManager notificationManager = (NotificationManager) 
+getSystemService(Context.NOTIFICATION_SERVICE); 
+
+ 
+
+// NotificationChannel for Android 8.0+ (Oreo and above) 
+
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { 
+
+NotificationChannel channel = new NotificationChannel("1", "NotificationDemo", 
+NotificationManager.IMPORTANCE_DEFAULT); 
+
+notificationManager.createNotificationChannel(channel); 
+
+} 
+
+ 
+
+// Notification 
+
+Notification notification = new Notification.Builder(this, "1") 
+
+.setContentTitle("Notification Title") 
+
+.setContentText("This is a notification message.") 
+
+.setSmallIcon(R.drawable.ic_launcher_foreground) 
+
+.build(); 
+
+ 
+
+// Send the notification 
+
+notificationManager.notify(1, notification); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity2.xml 
+
+<!-- res/layout/activity_second.xml --> 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="16dp" 
+
+android:gravity="center"> 
+
+ 
+
+<!-- TextView to display the notification message --> 
+
+<TextView 
+
+android:id="@+id/tvNotificationMessage" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Notification Message will appear here" 
+
+android:textSize="18sp" 
+
+android:textColor="#000000" 
+
+android:layout_marginTop="50dp"/> 
+
+ 
+
+</LinearLayout> 
+
+ 
+
+Activity2.java 
+
+// SecondActivity.java 
+
+package com.example.notificationdemo; 
+
+ 
+
+import android.content.Intent; 
+
+import android.os.Bundle; 
+
+
+
+import android.widget.TextView; 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+public class SecondActivity extends AppCompatActivity { 
+
+ 
+
+private TextView tvNotificationMessage; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_second); 
+
+ 
+
+tvNotificationMessage = findViewById(R.id.tvNotificationMessage); 
+
+ 
+
+// Get the notification message from the intent 
+
+Intent intent = getIntent(); 
+
+String message = intent.getStringExtra("notificationMessage"); 
+
+ 
+
+// Display the message in the TextView 
+
+tvNotificationMessage.setText(message); 
+
+} 
+
+}

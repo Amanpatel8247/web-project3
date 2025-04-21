@@ -1,0 +1,230 @@
+1. Arithmetic Operations App (Using ConstraintLayout)
+package com.example.arithmeticapp;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText num1, num2;
+    TextView result;
+    Button add, sub, mul, div;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        num1 = findViewById(R.id.num1);
+        num2 = findViewById(R.id.num2);
+        result = findViewById(R.id.result);
+        add = findViewById(R.id.add);
+        sub = findViewById(R.id.sub);
+        mul = findViewById(R.id.mul);
+        div = findViewById(R.id.div);
+
+        add.setOnClickListener(v -> {
+            int a = Integer.parseInt(num1.getText().toString());
+            int b = Integer.parseInt(num2.getText().toString());
+            result.setText("Result: " + (a + b));
+        });
+
+        sub.setOnClickListener(v -> {
+            int a = Integer.parseInt(num1.getText().toString());
+            int b = Integer.parseInt(num2.getText().toString());
+            result.setText("Result: " + (a - b));
+        });
+
+        mul.setOnClickListener(v -> {
+            int a = Integer.parseInt(num1.getText().toString());
+            int b = Integer.parseInt(num2.getText().toString());
+            result.setText("Result: " + (a * b));
+        });
+
+        div.setOnClickListener(v -> {
+            int a = Integer.parseInt(num1.getText().toString());
+            int b = Integer.parseInt(num2.getText().toString());
+            if (b != 0)
+                result.setText("Result: " + (a / b));
+            else
+                result.setText("Cannot divide by zero");
+        });
+    }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/num1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Number 1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/num2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Number 2"
+        app:layout_constraintTop_toBottomOf="@id/num1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintTop_toBottomOf="@id/num2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"/>
+
+    <Button
+        android:id="@+id/sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subtract"
+        app:layout_constraintTop_toBottomOf="@id/num2"
+        app:layout_constraintStart_toEndOf="@id/add"
+        android:layout_marginStart="16dp"/>
+
+    <Button
+        android:id="@+id/mul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Multiply"
+        app:layout_constraintTop_toBottomOf="@id/add"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <Button
+        android:id="@+id/div"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Divide"
+        app:layout_constraintTop_toBottomOf="@id/sub"
+        app:layout_constraintStart_toEndOf="@id/mul"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result: "
+        app:layout_constraintTop_toBottomOf="@id/mul"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+ Simple Bank App with Menus
+package com.example.bankapp;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private double balance = 1000.0;
+    private TextView balanceTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        balanceTextView = findViewById(R.id.balanceTextView);
+        Button withdrawButton = findViewById(R.id.withdrawButton);
+        Button depositButton = findViewById(R.id.depositButton);
+        Button checkBalanceButton = findViewById(R.id.checkBalanceButton);
+
+        withdrawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                withdraw(100);
+            }
+        });
+
+        depositButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deposit(200);
+            }
+        });
+
+        checkBalanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBalance();
+            }
+        });
+    }
+
+    private void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            Toast.makeText(this, "Withdrawn: $" + amount, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Insufficient balance", Toast.LENGTH_SHORT).show();
+        }
+        checkBalance();
+    }
+
+    private void deposit(double amount) {
+        balance += amount;
+        Toast.makeText(this, "Deposited: $" + amount, Toast.LENGTH_SHORT).show();
+        checkBalance();
+    }
+
+    private void checkBalance() {
+        balanceTextView.setText("Balance: $" + balance);
+    }
+}
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/balanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balance: $1000"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/withdrawButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Withdraw $100"/>
+
+    <Button
+        android:id="@+id/depositButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deposit $200"/>
+
+    <Button
+        android:id="@+id/checkBalanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Balance"/>
+</LinearLayout>

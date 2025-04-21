@@ -1,0 +1,363 @@
+﻿Q1) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+android:orientation="vertical" 
+
+android:padding="20dp" 
+
+android:gravity="center"> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnMerge" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Merge Arrays" /> 
+
+ 
+
+<TextView 
+
+android:id="@+id/txtResult" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:layout_marginTop="20dp" 
+
+android:text="Merged Result Will Appear Here" 
+
+android:textSize="18sp" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Activity.java 
+
+package com.example.mergearrays; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.widget.Button; 
+
+import android.widget.TextView; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+import java.util.ArrayList; 
+
+import java.util.Arrays; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+Button btnMerge; 
+
+TextView txtResult; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+btnMerge = findViewById(R.id.btnMerge); 
+
+txtResult = findViewById(R.id.txtResult); 
+
+ 
+
+btnMerge.setOnClickListener(v -> { 
+
+// Define two ArrayLists 
+
+ArrayList<String> list1 = new ArrayList<>(Arrays.asList("Apple", "Banana", "Cherry")); 
+
+
+
+ArrayList<String> list2 = new ArrayList<>(Arrays.asList("Mango", "Orange", "Grapes")); 
+
+ 
+
+// Merge lists 
+
+ArrayList<String> mergedList = new ArrayList<>(list1); 
+
+mergedList.addAll(list2); 
+
+ 
+
+// Display result 
+
+txtResult.setText("Merged List: " + mergedList.toString()); 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+---------------------- IF USING ARRAY -------------------- 
+
+String[] arr1 = {"A", "B", "C"}; 
+
+String[] arr2 = {"D", "E"}; 
+
+String[] mergedArray = new String[arr1.length + arr2.length]; 
+
+System.arraycopy(arr1, 0, mergedArray, 0, arr1.length); 
+
+System.arraycopy(arr2, 0, mergedArray, arr1.length, arr2.length); 
+
+ 
+
+txtResult.setText("Merged Array: " + Arrays.toString(mergedArray)); 
+
+ 
+
+ 
+
+Q2) 
+
+Activity.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+android:layout_width="match_parent" 
+
+android:layout_height="match_parent" 
+
+
+
+android:orientation="vertical" 
+
+android:gravity="center" 
+
+android:padding="20dp"> 
+
+ 
+
+<Button 
+
+android:id="@+id/btnPickTime" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Pick Time" /> 
+
+ 
+
+<TextView 
+
+android:id="@+id/txtTime" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" 
+
+android:text="Selected Time Will Appear Here" 
+
+android:textSize="18sp" 
+
+android:layout_marginTop="20dp" /> 
+
+</LinearLayout> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Activity.java 
+
+package com.example.timepickerdemo; 
+
+ 
+
+import android.app.TimePickerDialog; 
+
+import android.os.Bundle; 
+
+import android.widget.Button; 
+
+
+
+import android.widget.TextView; 
+
+import android.widget.TimePicker; 
+
+ 
+
+import androidx.appcompat.app.AppCompatActivity; 
+
+ 
+
+import java.util.Calendar; 
+
+ 
+
+public class MainActivity extends AppCompatActivity { 
+
+ 
+
+Button btnPickTime; 
+
+TextView txtTime; 
+
+ 
+
+@Override 
+
+protected void onCreate(Bundle savedInstanceState) { 
+
+super.onCreate(savedInstanceState); 
+
+setContentView(R.layout.activity_main); 
+
+ 
+
+btnPickTime = findViewById(R.id.btnPickTime); 
+
+txtTime = findViewById(R.id.txtTime); 
+
+ 
+
+btnPickTime.setOnClickListener(v -> { 
+
+// Get current time 
+
+Calendar calendar = Calendar.getInstance(); 
+
+int hour = calendar.get(Calendar.HOUR_OF_DAY); 
+
+int minute = calendar.get(Calendar.MINUTE); 
+
+ 
+
+// Create TimePickerDialog 
+
+TimePickerDialog timePickerDialog = new TimePickerDialog( 
+
+
+
+MainActivity.this, 
+
+(TimePicker view, int hourOfDay, int minute1) -> { 
+
+String selectedTime = String.format("%02d:%02d", hourOfDay, minute1); 
+
+txtTime.setText("Selected Time: " + selectedTime); 
+
+}, 
+
+hour, 
+
+minute, 
+
+true // 24 hour format 
+
+); 
+
+ 
+
+timePickerDialog.show(); 
+
+}); 
+
+} 
+
+} 
+
+ 
+
+ 
+
+Manifest File- 
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+
+package="com.example.timepickerdemo"> 
+
+ 
+
+<application 
+
+android:allowBackup="true" 
+
+android:label="TimePickerDemo" 
+
+android:supportsRtl="true" 
+
+android:theme="@style/Theme.AppCompat.Light.NoActionBar"> 
+
+ 
+
+<activity android:name=".MainActivity"> 
+
+<intent-filter> 
+
+
+
+<action android:name="android.intent.action.MAIN" /> 
+
+<category android:name="android.intent.category.LAUNCHER" /> 
+
+</intent-filter> 
+
+</activity> 
+
+ 
+
+</application> 
+
+ 
+
+</manifest>
